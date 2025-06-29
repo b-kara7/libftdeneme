@@ -6,15 +6,15 @@
 /*   By: bkara <bkara@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/31 12:37:55 by bkara             #+#    #+#             */
-/*   Updated: 2025/06/27 17:44:28 by bkara            ###   ########.fr       */
+/*   Updated: 2025/06/29 20:00:41 by bkara            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-# ifndef LIBFT_H
+#ifndef LIBFT_H
 # define LIBFT_H
 
-#include <unistd.h>
-#include <stdlib.h>
+# include <unistd.h>
+# include <stdlib.h>
 
 int		ft_isalnum(int c);
 int		ft_isalpha(int c);
@@ -48,7 +48,7 @@ void	ft_putchar_fd(char c, int fd);
 void	ft_putstr_fd(char *s, int fd);
 void	ft_putendl_fd(char *s, int fd);
 void	ft_putnbr_fd(int n, int fd);
-char **ft_split(char const *s, char c);
+char	**ft_split(char const *s, char c);
+char	*ft_itoa(int n);
 
 #endif
-
