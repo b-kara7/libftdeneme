@@ -46,8 +46,6 @@ all : $(NAME)
 
 $(NAME) : $(OBJ)
 		ar rcs $(NAME) $(OBJ)
-		
-$(OBJ) : libft.h
 
 clean :
 	rm -f $(OBJ)

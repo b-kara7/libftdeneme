@@ -6,7 +6,7 @@
 /*   By: bkara <bkara@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/31 16:00:53 by bkara             #+#    #+#             */
-/*   Updated: 2025/06/24 13:32:39 by bkara            ###   ########.fr       */
+/*   Updated: 2025/07/01 20:30:26 by bkara            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,20 +15,18 @@
 size_t	ft_strlcpy(char *dst, const char *src, size_t size)
 {
 	size_t	i;
-	size_t	srclen;
 
 	i = 0;
-	while (src[i] != '\0')
-		i++;
-	srclen = i;
-	if (size == 0)
-		return (srclen);
-	i = 0;
-	while (i < size - 1 && src[i] != '\0')
+	if (size > 0)
 	{
-		dst[i] = src[i];
-		i++;
+		while (src[i] && i < size - 1)
+		{
+			dst[i] = src[i];
+			i++;
+		}
+		dst[i] = '\0';
 	}
-	dst[i] = '\0';
-	return (srclen);
+	while (src[i])
+		i++;
+	return (i);
 }
