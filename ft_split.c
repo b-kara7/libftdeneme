@@ -6,7 +6,7 @@
 /*   By: bkara <bkara@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/26 17:02:16 by bkara             #+#    #+#             */
-/*   Updated: 2025/06/29 19:59:57 by bkara            ###   ########.fr       */
+/*   Updated: 2025/07/02 21:49:09 by bkara            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,88 +15,87 @@
 static int	ft_count_words(char const *s, char c)
 {
 	size_t	i;
-	size_t	countword;
+	size_t	count;
 
 	if (!s)
 		return (0);
 	i = 0;
-	countword = 0;
+	count = 0;
 	while (s[i])
 	{
 		if (s[i] != c && (s[i + 1] == c || s[i + 1] == '\0'))
-			countword++;
+			count++;
 		i++;
 	}
-	return (countword);
+	return (count);
 }
 
-static void	ft_makewords(char *newword, char const *s, char c)
+static void	ft_makewords(char *dst, char const *src, size_t len)
 {
 	size_t	i;
 
 	i = 0;
-	while (s[i] != c && s[i])
+	while (i < len)
 	{
-		newword[i] = s[i];
+		dst[i] = src[i];
 		i++;
 	}
-	newword[i] = '\0';
+	dst[i] = '\0';
 }
 
-static void	*ft_allfree(char **newstring, int words)
+static void	*ft_allfree(char **arr, int n)
 {
 	int	i;
 
 	i = 0;
-	while (i < words)
+	while (i < n)
 	{
-		free(newstring[i]);
+		free(arr[i]);
 		i++;
 	}
-	free(newstring);
+	free(arr);
 	return (NULL);
 }
 
-static char	**ft_fillstring(char **newstring, char const *s, char c)
+static char	**ft_fillstring(char **arr, char const *s, char c)
 {
 	size_t	i;
 	size_t	index;
-	size_t	count;
+	size_t	len;
 
 	i = 0;
 	index = 0;
 	while (s[index])
 	{
-		count = 0;
-		while (s[index + count] != '\0' && s[index + count] != c)
-			count++;
-		if (count > 0)
+		len = 0;
+		while (s[index + len] && s[index + len] != c)
+			len++;
+		if (len > 0)
 		{
-			newstring[i] = malloc(sizeof(char) * (count + 1));
-			if (!newstring[i])
-				return (ft_allfree(newstring, i));
-			ft_makewords(newstring[i], s + index, c);
+			arr[i] = malloc(sizeof(char) * (len + 1));
+			if (!arr[i])
+				return (ft_allfree(arr, i));
+			ft_makewords(arr[i], s + index, len);
 			i++;
-			index = index + count;
+			index += len;
 		}
 		else
 			index++;
 	}
-	newstring[i] = 0;
-	return (newstring);
+	arr[i] = NULL;
+	return (arr);
 }
 
 char	**ft_split(char const *s, char c)
 {
-	size_t	words;
-	char	**newstring;
+	char	**result;
+	int		words;
 
 	if (!s)
 		return (NULL);
 	words = ft_count_words(s, c);
-	newstring = (char **)ft_calloc((words + 1), (sizeof(char *)));
-	if (!newstring)
+	result = (char **)malloc(sizeof(char *) * (words + 1));
+	if (!result)
 		return (NULL);
-	newstring = ft_fillstring(newstring, s, c);
-	return (newstring);
+	return (ft_fillstring(result, s, c));
 }
